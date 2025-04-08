@@ -132,8 +132,10 @@ def process_calibration(input_path, output_path, top_crop):
             # 解析投影矩阵值
             matrix_vals = [float(x) for x in values.split()]
 
-            # 调整cy（垂直主点）在扁平矩阵中的索引为5（3x4矩阵中的第二行第三列）
-            matrix_vals[5] -= top_crop
+            # 调整cy（垂直主点）
+            # KITTI投影矩阵格式：[f_x 0 c_x t_x 0 f_y c_y t_y 0 0 1 0]
+            # c_y的索引应该是6
+            matrix_vals[6] -= top_crop
 
             # 使用相同精度格式化回字符串
             formatted_vals = []
